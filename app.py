@@ -10,22 +10,40 @@ st.set_page_config(page_title="Adult Income Classifier", layout="wide")
 st.title("🧠 Adult Income Classification System")
 st.write("This application compares multiple machine learning classifiers for income prediction.")
 
+# -------------------------------
 # Load performance results
+# -------------------------------
 results = pd.read_csv("model_results.csv")
 
+# -------------------------------
+# Show comparison of all models
+# -------------------------------
+st.subheader("📊 Comparison of All Models")
+st.dataframe(results, use_container_width=True)
+
+st.markdown("---")
+
+# -------------------------------
 # Sidebar model selection
+# -------------------------------
 st.sidebar.header("Model Selection")
 model_name = st.sidebar.selectbox(
     "Choose a classifier",
     results["Model"].values
 )
 
-# Display metrics
-st.subheader("📊 Model Evaluation Metrics")
+# -------------------------------
+# Show selected model metrics
+# -------------------------------
+st.subheader("📌 Selected Model Performance")
 selected_row = results[results["Model"] == model_name]
 st.dataframe(selected_row, use_container_width=True)
 
+st.markdown("---")
+
+# -------------------------------
 # Upload dataset
+# -------------------------------
 st.subheader("📂 Upload Test Dataset")
 uploaded_file = st.file_uploader("Upload CSV file containing test data", type=["csv"])
 
@@ -45,13 +63,17 @@ if uploaded_file is not None:
     model = joblib.load(f"model/{model_name.replace(' ', '_')}.pkl")
     predictions = model.predict(X)
 
+    # -------------------------------
     # Classification Report
+    # -------------------------------
     st.subheader("📄 Classification Report")
     report = classification_report(y, predictions, output_dict=True)
     report_df = pd.DataFrame(report).transpose()
     st.dataframe(report_df, use_container_width=True)
 
+    # -------------------------------
     # Confusion Matrix
+    # -------------------------------
     st.subheader("🔍 Confusion Matrix")
     cm = confusion_matrix(y, predictions)
 
