@@ -106,13 +106,6 @@ streamlit run app.py
 
 ------------------------------------------------------------------------
 
-## 📌 Deployment
-
-The application is deployed using Streamlit Community Cloud.\
-(Add Streamlit deployment URL here after deployment)
-
-------------------------------------------------------------------------
-
 ## 📚 Reference
 
 Becker, B. & Kohavi, R. (1996). Adult Dataset.\
